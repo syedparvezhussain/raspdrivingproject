@@ -58,23 +58,31 @@ app.get("/exampleApi", (req, res) => {
   io.to("clock-room").emit("Event", bar);
 
   res.send({ express: bar }); //Line 10
-  // sport.end();
+
 }); //Line 11
 app.get("/getVehicleStatus", (req, res) => {
   //Line 9
+    var currentDate = new Date();
+  console.log(currentDate.toISOString())
   const accident=req.query.accident  // true
   const rash = req.query.rash
   const location = req.query.location
-  // sport.write(bar);
+  const severity = req.query.severity
+  const id = req.query.id
+  const falseAlarmTrigger = req.query.falseAlarmTrigger
+  
  const data = {
 accident:accident,
 rash:rash,
-location:location
-
+location:location,
+timestamp:currentDate.toISOString(),
+severity:severity,
+id:id,
+falseAlarmTrigger:falseAlarmTrigger
 }
   console.log('getting api call',data)
   io.to("clock-room").emit("Event", data);
 
   res.send({ express: data }); //Line 10
-  // sport.end();
+
 }); //Line 11

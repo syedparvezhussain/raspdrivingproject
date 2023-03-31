@@ -18,7 +18,7 @@
         },
           {
             "name":"ayesha",
-            "role":"family",
+            "role":"company",
             "userName":"mom123",
             "roleId":3,
             "id":10003,
@@ -26,7 +26,7 @@
         },
         {
             "name":"naushad",
-            "role":"family",
+            "role":"company",
             "userName":"dad123",
             "roleId":3,
             "id":10004,

@@ -10,9 +10,9 @@ import LandingPage from "./components/LandingPage";
 function App() {
 const [data, setData] = useState("");
 const [arrayOfMessages, setArrayOfMessages]= useState([])
-
+const [messagee, setMessage]= useState("data updated");
   useEffect(() => {
-    
+    let message="data updated"
     const socket = io("http://localhost:5000");
     socket.on("connect", () => console.log(socket.id));
     socket.on("connect_error", () => {
@@ -23,17 +23,28 @@ const [arrayOfMessages, setArrayOfMessages]= useState([])
     setData(data);
     const x= arrayOfMessages
     if(arrayOfMessages && arrayOfMessages.length !== 0 && arrayOfMessages[arrayOfMessages.length-1].location !== data.location){
+      if(data.falseAlarmTrigger==="true"){
+        x.pop();
+        message="false Alarm, recent Accedent / update of RashDriving is cleared"
+      }
+      else{
 x.push(data)
+if(data.accident==="true"){
+   message="majour Accident detected, seviority is also  " + data.severity
+}
+      }
+
     }
     else if(arrayOfMessages.length===0){
       x.push(data)
     }
     
     setArrayOfMessages(x)
+    setMessage(message)
     }
       );
     socket.on("disconnect", () => setData("server disconnected"));
-  }, []);
+  }, [messagee]);
 
 
   return (
@@ -44,6 +55,11 @@ x.push(data)
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <ul className="navbar-nav mr-auto">
+              <div className="MessageAlertSections">
+      
+          <h5>{messagee}</h5>
+
+            </div>
             <li><Link to={'/'} className="nav-link">Landing Page </Link></li>
             <li><Link to={'/Hospital'} className="nav-link">Hospital </Link></li>
             <li><Link to={'/PoliceStation'} className="nav-link">Police Station</Link></li>

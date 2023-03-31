@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactTable from "react-table-v6";
+import Table from "./Table";
 import "react-table-v6/react-table.css";
 
-const data = [
+const data1 = [
   {
     id: 1,
     timestamp: "2022-03-28T10:00:00.000Z",
@@ -72,8 +73,28 @@ const columns = [
   },
 ];
 
-const MainPage = () => {
+const MainPage = ({arrayOfMessages}) => {
   const [activeTab, setActiveTab] = useState("Hospital");
+  const [data, setData] = useState([])
+  const loc = data && data[data.length-1]?.location
+ 
+  useEffect(()=>{
+setData(arrayOfMessages)
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://www.fast2sms.com/dev/bulkV2?authorization=duFxn6XTr0wH7s8fKNU5kJqEA9GBoWOR1YMVhzgP4e2QmvCLZ3XiZc7G9OJWgFRx3QNLsCMuHUTze2VA&message=Rash driving detected mundu me driver ni jail lo vestam ;) &language=english&route=q&numbers=6303528748,8919266028,9440996839",
+  "method": "GET"
+}
+ fetch(settings.url)
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+          console.log("responseComing after sensing sms",data);
+      })
+
+  },[arrayOfMessages, loc])
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -82,6 +103,7 @@ const MainPage = () => {
   return (
     <div className="landing-page">
       <nav className="nav-options">
+        {data && data[data.length-1]?.location}
         <button
           className={activeTab === "Hospital" ? "active" : ""}
           onClick={() => handleTabChange("Hospital")}
@@ -102,7 +124,8 @@ const MainPage = () => {
         </button>
       </nav>
       <div className="main-area">
-        <ReactTable data={data} columns={columns} />
+        {data.length? <Table data={data}  columns={columns}  />:null}
+      
       </div>
     </div>
   );

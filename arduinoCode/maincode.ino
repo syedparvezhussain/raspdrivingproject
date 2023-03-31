@@ -32,7 +32,7 @@ float longitude = 79.910663+count;
 
 //char url[100];
 //sprintf(url, "http://192.168.253.153:5000/getVehicleStatus?accident=true&rash=false&location=%s,%s", dtostrf(latitude, 7, 6, url), dtostrf(longitude, 8, 6, url));
-    const char* url = "http://192.168.253.153:5000/getVehicleStatus?accident=true&rash=false&location=14.4292614,79.910663";
+    const char* url = "http://192.168.253.153:5000/getVehicleStatus?id=129839182&accident=true&rash=false&location=14.4292614,79.910663";
     http.begin(wifiClient, url);
     
     int httpResponseCode = http.GET();

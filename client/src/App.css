@@ -84,7 +84,33 @@ button[type="submit"]:hover {
 .App-link {
   color: #61dafb;
 }
+.Table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+.Table th,
+.Table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+.MessageAlertSections{
+  width:300px;
+  height: 50px;
+  border:2px gray solid;
+  position: fixed;
+  top:0px;
+  right:0px;
+}
+.Table th {
+  background-color: #dddddd;
+}
+
+.Table .indicator {
+  font-size: 1.2em;
+  color: green;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
