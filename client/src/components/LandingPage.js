@@ -1,9 +1,12 @@
 
 import { useEffect, useState } from "react"
 import Login from "./Login"
+import Signup from "./Signup"
 import MainPage from "./MainPage"
 export default function LandingPage({arrayOfMessages}){
     const [loggedIn, setLogin] = useState(false)
+    const [signUp, setSignUp] = useState(false)
+
       const [data, setData] = useState([])
       useEffect(()=>{
 setData(arrayOfMessages)
@@ -26,11 +29,18 @@ setData(arrayOfMessages)
 {loggedIn && 
     <div>
         <button onClick={()=>setLogin(false)}>Logout</button>
+
         <MainPage arrayOfMessages={data}/>
     </div>}
-{!loggedIn && 
+
+{!loggedIn && !signUp &&
     <Login handleLogin={(e)=>{setLogin(e)}} isLoggedin ={loggedIn}/>
     }
+    {signUp && <Signup />
+    }
+
+    <button onClick={()=>setSignUp(!signUp)}>{signUp?"login":"signup"}</button>
+
     </div>
  )
 }

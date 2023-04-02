@@ -111,6 +111,40 @@ button[type="submit"]:hover {
   font-size: 1.2em;
   color: green;
 }
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #61dafb;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+button {
+  padding: 10px;
+  font-size: 1.2rem;
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* You can add more styles to customize your page as needed */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

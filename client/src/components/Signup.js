@@ -1,28 +1,26 @@
 import React, { useState } from "react";
-import settings from '../settings.json'
-const Login = ({handleLogin, isLoggedin}) => {
+
+const Signup = ({handleLogin, isLoggedin}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  async function logJSONData(username,password) {
+  const response = await fetch(`http://localhost:5000/signUp?username=${username}&password=${password}`);
+  const jsonData = await response.json();
+  console.log(jsonData);
+  alert(jsonData)
+}
+const handleSignInSubmit =(e)=>{
+   e.preventDefault();
     console.log(`Username: ${username} Password: ${password}`);
-    // You can add your authentication logic here
-    const data = settings.data;
-    const x= data.some((e)=>username === e.userName && password === e.passWord)
-    if(x){
-        handleLogin(true)
-    }
-    else{
-        alert("something is wrong, please try again later with correct iD password")
-    }
+    //make an API call
+logJSONData(username,password);
 
-  };
-
+}
   return (
     <div className="login-container">
-    <h1>{"Login"}</h1>
-      <form onSubmit={handleSubmit }>
+    <h1>{"sign up"}</h1>
+      <form onSubmit={handleSignInSubmit }>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
           <input
@@ -41,11 +39,10 @@ const Login = ({handleLogin, isLoggedin}) => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
-    
+        <button type="submit">Sign Up</button>
       </form> 
     </div>
   );
 };
 
-export default Login;
+export default Signup;

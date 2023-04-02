@@ -38,9 +38,9 @@ if(data.accident==="true"){
     else if(arrayOfMessages.length===0){
       x.push(data)
     }
-    
-    setArrayOfMessages(x)
     setMessage(message)
+    setArrayOfMessages(x)
+    
     }
       );
     socket.on("disconnect", () => setData("server disconnected"));
