@@ -54,16 +54,6 @@ if(data.accident==="true"){
        <Router>
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <ul className="navbar-nav mr-auto">
-              <div className="MessageAlertSections">
-      
-          <h5>{messagee}</h5>
-
-            </div>
-            <li><Link to={'/'} className="nav-link">Landing Page </Link></li>
-            <li><Link to={'/Hospital'} className="nav-link">Hospital </Link></li>
-            <li><Link to={'/PoliceStation'} className="nav-link">Police Station</Link></li>
-          </ul>
           </nav>
           <hr />
           <Switch>

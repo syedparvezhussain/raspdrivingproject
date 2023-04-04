@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import ReactTable from "react-table-v6";
 import Table from "./Table";
 import "react-table-v6/react-table.css";
-
+import Modal from './Modal';
+import contact from "../contact.json"
 const data1 = [
   {
     id: 1,
@@ -32,7 +33,36 @@ const data1 = [
     severity: "Medium",
   },
 ];
-
+const datahard = [
+  {
+    id: 1,
+    timestamp: "2022-03-28T10:00:00.000Z",
+    location: "123 Main St.",
+    message:"Accedent Detected",
+    personname: "Nikhila"
+  },
+  {
+    id: 2,
+    timestamp: "2022-03-28T11:00:00.000Z",
+    location: "456 Elm St.",
+    message:"Rash Driving detected",
+    personname: "Mobeen"
+  },
+  {
+    id: 3,
+    timestamp: "2022-03-28T12:00:00.000Z",
+    location: "789 Oak St.",
+    message:"Accedent Detected",
+    personname: "Nikhil"
+  },
+  {
+    id: 4,
+    timestamp: "2022-03-28T13:00:00.000Z",
+    location: "789 Oak St.",
+    message:"Accedent Detected",
+    personname: "akhil"
+  },
+];
 const columns = [
   {
     Header: "Vehicle ID",
@@ -72,12 +102,31 @@ const columns = [
     accessor: "severity",
   },
 ];
-
+const columns2 = [
+  {
+    Header: "Contact Person Name",
+    accessor: "name",
+  },
+  {
+    Header: "Contact person relation",
+    accessor: "relation",
+  },
+  {
+    Header: "contact person ID",
+    accessor: "id",
+  },
+    {
+    Header: "contact details",
+    accessor: "phone",
+  },
+   
+];
 const MainPage = ({arrayOfMessages}) => {
-  const [activeTab, setActiveTab] = useState("Hospital");
+
   const [data, setData] = useState([])
   const loc = data && data[data.length-1]?.location
- 
+  const [contactData, setContactData] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(()=>{
 setData(arrayOfMessages)
 var settings = {
@@ -93,35 +142,41 @@ var settings = {
       .then(data => {
           console.log("responseComing after sensing sms",data);
       })
-
   },[arrayOfMessages, loc])
+  
+    useEffect(()=>{
 
-  const handleTabChange = (tabName) => {
-    setActiveTab(tabName);
+    setContactData(contact.contacts);
+  }, [])
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
+
+   async function clearContactJson() {
+  const response = await fetch(`http://localhost:5000/clearContacts`);
+  const jsonData = await response.json();
+  console.log(jsonData);
+  alert(jsonData)
+}
 
   return (
     <div className="landing-page">
       <nav className="nav-options">
+    
         {data && data[data.length-1]?.location}
-        <button
-          className={activeTab === "Hospital" ? "active" : ""}
-          onClick={() => handleTabChange("Hospital")}
-        >
-          Hospital
-        </button>
-        <button
-          className={activeTab === "Family" ? "active" : ""}
-          onClick={() => handleTabChange("Family")}
-        >
-          Family
-        </button>
-        <button
-          className={activeTab === "PoliceStation" ? "active" : ""}
-          onClick={() => handleTabChange("PoliceStation")}
-        >
-          Police Station
-        </button>
+  <button onClick={handleOpenModal}>Add contacts</button>
+         <button onClick={()=>{
+          setContactData([]);
+            clearContactJson();
+        }}>Clear Contacts Data</button>
+      {isModalOpen && <Modal data={contactData} setData={setContactData} studentData={datahard} closeModal={() => setIsModalOpen(false)} />}
+      <div className="main-area">
+        Contact Info
+        <div style={{height:"300px",  overflow:"auto"}}>
+        <Table data={contactData} columns={columns2} />
+        </div>
+        </div>
+        
       </nav>
       <div className="main-area">
         {data.length? <Table data={data}  columns={columns}  />:null}
